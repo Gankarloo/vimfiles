@@ -106,7 +106,7 @@ set autoindent
 set smartindent
 set showmatch
 set langmenu=none
-language messages en
+language messages en_US.utf8
 set wildmode=longest,list,full
 set path+=**
 " keep buffer of lines above and below cursor
