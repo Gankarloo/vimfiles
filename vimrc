@@ -10,6 +10,12 @@ else
   " location of minpac
   let g:minpacdir = g:vimfiles . 'pack/minpac/opt/minpac'
 endif
+
+"=== Auto install package manager
+if empty(glob(g:minpacdir))
+  execute 'silent !git clone https://github.com/k-takata/minpac.git ' . g:minpacdir
+endif
+
 "=== Load package manager
 packadd minpac
 
@@ -44,12 +50,6 @@ command! PackUpdate packadd minpac | source $MYVIMRC | call minpac#update('', {'
 command! PackClean  packadd minpac | source $MYVIMRC | call minpac#clean()
 command! PackStatus packadd minpac | source $MYVIMRC | call minpac#status()
 
-"=== vimrc path win/nix
-if has('win64')
-  let g:vimrcpath = $HOME . '\vimfiles\'
-else
-  let g:vimrcpath = $HOME . '/.vim/'
-endif
   
 "=== viminfo
 " set location of viminfo
