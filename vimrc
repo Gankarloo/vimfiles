@@ -32,6 +32,24 @@ command! PackUpdate packadd minpac | source $MYVIMRC | call minpac#update('', {'
 command! PackClean  packadd minpac | source $MYVIMRC | call minpac#clean()
 command! PackStatus packadd minpac | source $MYVIMRC | call minpac#status()
 
+" set location of viminfo
+if has('win64')
+  set viminfofile=$HOME/vimfiles/viminfo
+elseif has('unix')
+  set viminfofile=$HOME/.vim/viminfo
+endif
+"set backupdir
+"set swapfile
+
+"=== Fugitive settings
+" load on demand
+function LoadFugitive()
+  :packadd vim-fugitive
+  :edit
+endfunction
+
+nmap <F1> :call LoadFugitive()<CR>
+
 "=== Lightline settings
 set noshowmode
 set laststatus=2
@@ -166,7 +184,7 @@ function! s:denite_filter_settings() abort
 endfunction
 
 " Browse open buffers
-nnoremap ; :Denite buffer<CR> 
+"nnoremap ; :Denite buffer<CR> "bad mapping
 " Browse files in current directory
 nnoremap <leader>t :DeniteProjectDir file/rec<CR>
 "   <leader>g - Search current directory for occurences of given term and close window if no results
@@ -238,5 +256,5 @@ augroup End
 "=== Markdown settings
 augroup Markdown
   autocmd!
-  autocmd FileType markdown :setlocal ts=4 sw:4 sts=4<CR>
+  autocmd FileType markdown :setlocal ts=4 sw=4 sts=4
 augroup End
