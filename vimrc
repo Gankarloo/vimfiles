@@ -14,6 +14,7 @@ endif
 "=== Auto install package manager
 if empty(glob(g:minpacdir))
   execute 'silent !git clone https://github.com/k-takata/minpac.git ' . g:minpacdir
+  let g:minpacFirstRun = 1
 endif
 
 "=== Load package manager
@@ -49,6 +50,11 @@ call minpac#add('sheerun/vim-polyglot')
 command! PackUpdate packadd minpac | source $MYVIMRC | call minpac#update('', {'do': 'call minpac#status()'})
 command! PackClean  packadd minpac | source $MYVIMRC | call minpac#clean()
 command! PackStatus packadd minpac | source $MYVIMRC | call minpac#status()
+
+" if firstrun fire off PackUpdate
+if g:minpacFirstRun == 1
+  call PackUpdate
+endif
 
   
 "=== viminfo
