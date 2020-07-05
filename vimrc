@@ -52,8 +52,13 @@ command! PackClean  packadd minpac | source $MYVIMRC | call minpac#clean()
 command! PackStatus packadd minpac | source $MYVIMRC | call minpac#status()
 
 " if firstrun fire off PackUpdate
-if g:minpacFirstRun == 1
-  call PackUpdate
+if exists('g:minpacFirstRun')
+  echom('First run detected, running PackUpdate')
+  call minpac#update()
+  !echo 'Plugin installation done, exiting...'
+  unlet g:minpacFirstRun
+  echom('######### RESTART VIM....############')
+  finish
 endif
 
   
