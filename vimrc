@@ -53,7 +53,7 @@ command! PackStatus packadd minpac | source $MYVIMRC | call minpac#status()
   
 "=== viminfo
 " set location of viminfo
-  let viminfofile = g:vimrcpath . 'viminfo'
+  let viminfofile = g:vimfiles . 'viminfo'
 "set backupdir
 "set swapfile
 
