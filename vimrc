@@ -32,14 +32,21 @@ command! PackUpdate packadd minpac | source $MYVIMRC | call minpac#update('', {'
 command! PackClean  packadd minpac | source $MYVIMRC | call minpac#clean()
 command! PackStatus packadd minpac | source $MYVIMRC | call minpac#status()
 
-" set location of viminfo
+"=== vimrc path win/nix
 if has('win64')
-  set viminfofile=$HOME/vimfiles/viminfo
-elseif has('unix')
-  set viminfofile=$HOME/.vim/viminfo
+  let g:vimrcpath = $HOME . '\vimfiles\'
+else
+  let g:vimrcpath = $HOME . '/.vim/'
 endif
+  
+"=== viminfo
+" set location of viminfo
+  let viminfofile = g:vimrcpath . 'viminfo'
 "set backupdir
 "set swapfile
+
+"=== undodir
+"if !isdirectory($HOME."/vim
 
 "=== Fugitive settings
 " load on demand
@@ -98,7 +105,7 @@ set signcolumn=yes
 set autoindent
 set smartindent
 set showmatch
-set langmenu=en
+set langmenu=none
 language messages en
 set wildmode=longest,list,full
 set path+=**
