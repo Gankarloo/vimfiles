@@ -66,7 +66,11 @@ endif
 " set location of viminfo
   let viminfofile = g:vimfiles . 'viminfo'
 "set backupdir
-"set swapfile
+" Store all swapfiles in user vim directory/swapfiles
+if !isdirectory(g:vimfiles . 'swapfiles')
+  execute 'silent !mkdir ' . g:vimfiles . 'swapfiles'
+  let &directory = g:vimfiles . 'swapfiles//'
+endif
 
 "=== undodir
 "if !isdirectory($HOME."/vim
