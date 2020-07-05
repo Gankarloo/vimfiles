@@ -1,3 +1,15 @@
+"=== define some variables
+if has('win64')
+  " path to user vim dir
+  let g:vimfiles = $HOME . '\vimfiles\'
+  " location of minpac
+  let g:minpacdir = g:vimfiles . 'pack\minpac\opt\minpac'
+else
+  " path to user vim dir
+  let g:vimfiles = $HOME . '/.vim/'
+  " location of minpac
+  let g:minpacdir = g:vimfiles . 'pack/minpac/opt/minpac'
+endif
 "=== Load package manager
 packadd minpac
 
