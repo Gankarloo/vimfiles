@@ -84,7 +84,11 @@ let &backupdir = g:vimfiles . 'backup//'
 set backup
 
 "=== undodir
-"if !isdirectory($HOME."/vim
+if !isdirectory(g:vimfiles . 'undo')
+  execute 'silent !mkdir ' . g:vimfiles . 'undo'
+endif
+let &undodir = g:vimfiles . 'undo//'
+set undofile
 
 "=== Fugitive settings
 " load on demand
