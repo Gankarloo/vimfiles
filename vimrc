@@ -61,7 +61,6 @@ if exists('g:minpacFirstRun')
   finish
 endif
 
-  
 "=== viminfo
 " set location of viminfo
   let viminfofile = g:vimfiles . 'viminfo'
@@ -69,6 +68,11 @@ endif
 " Store all swapfiles in user vim directory/swapfiles
 if !isdirectory(g:vimfiles . 'swapfiles')
   execute 'silent !mkdir ' . g:vimfiles . 'swapfiles'
+endif
+
+if has('win64')
+  let &directory = g:vimfiles . 'swapfiles\\'
+else
   let &directory = g:vimfiles . 'swapfiles//'
 endif
 
