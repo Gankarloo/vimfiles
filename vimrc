@@ -142,7 +142,12 @@ set signcolumn=yes
 set autoindent
 set smartindent
 set showmatch
+set ignorecase
+set formatoptions+=j " Delete comment characters when joining lines
+set smartcase
+set history=1000
 set langmenu=none
+set pastetoggle=<F2>
 language messages en_US.utf8
 set wildmode=longest,list,full
 set path+=**
