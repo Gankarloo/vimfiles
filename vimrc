@@ -69,12 +69,7 @@ let viminfofile = g:vimfiles . 'viminfo'
 if !isdirectory(g:vimfiles . 'swapfiles')
   execute 'silent !mkdir ' . g:vimfiles . 'swapfiles'
 endif
-
-if has('win64')
-  let &directory = g:vimfiles . 'swapfiles\\'
-else
-  let &directory = g:vimfiles . 'swapfiles//'
-endif
+let &directory = g:vimfiles . 'swapfiles//'
 
 "set backupdir
 if !isdirectory(g:vimfiles . 'backup')
