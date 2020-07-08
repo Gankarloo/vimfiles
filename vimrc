@@ -116,10 +116,14 @@ if has("gui_running")
   set background=light
   colorscheme solarized8_flat
   let g:lightline = { 'colorscheme': 'solarized', }
-else
+elseif has('win64')
   set background=dark
   colorscheme ron
   let g:lightline = { 'colorscheme': 'default', }
+else
+  set background=dark
+  colorscheme solarized8_flat
+  let g:lightline = { 'colorscheme': 'solarized', }
 endif
 
 "=== Font settings
