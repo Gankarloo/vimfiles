@@ -182,82 +182,82 @@ ino <C-A> <C-O>yiW<End>=<C-R>=<C-R>0<CR>
 set encoding=utf-8
 let g:python3_host_prog='C:\Python38\python.exe'
 
-function! g:SetDeniteSettings ()
-  call denite#custom#option('_', {
-        \ 'prompt': '>',
-        \ 'split': 'floating',
-        \ 'highlight_matched_char': 'Underlined',
-        \ 'highlight_matched_range': 'NormalFloat',
-        \ 'wincol': &columns / 6,
-        \ 'winwidth': &columns * 2 / 3,
-        \ 'winrow': &lines / 6,
-        \ 'winheight': &lines * 2 / 3,
-        \ 'max_dynamic_update_candidates': 100000
-        \ })
-
-  call denite#custom#var('file/rec', 'command',
-        \ ['rg', '--files', '--glob', '!.git', '--color', 'never'])
-
-  " Ripgrep command on grep source
-  call denite#custom#var('grep', {
-        \ 'command': ['rg'],
-        \ 'default_opts': ['-i', '--vimgrep', '--no-heading'],
-        \ 'recursive_opts': [],
-        \ 'pattern_opt': ['--regexp'],
-        \ 'separator': ['--'],
-        \ 'final_opts': [],
-        \ })
-
-endfunction
-
-function! s:denite_settings() abort
-  nnoremap <silent><buffer><expr> <CR>
-        \ denite#do_map('do_action')
-  nnoremap <silent><buffer><expr> <C-v>
-        \ denite#do_map('do_action', 'vsplit')
-  nnoremap <silent><buffer><expr> d
-        \ denite#do_map('do_action', 'delete')
-  nnoremap <silent><buffer><expr> p
-        \ denite#do_map('do_action', 'preview')
-  nnoremap <silent><buffer><expr> <Esc>
-        \ denite#do_map('quit')
-  nnoremap <silent><buffer><expr> q
-        \ denite#do_map('quit')
-  nnoremap <silent><buffer><expr> i
-        \ denite#do_map('open_filter_buffer')
-  nnoremap <silent><buffer><expr> <Space>
-        \ denite#do_map('toggle_select').'j'
-endfunction
-
-
-function! s:denite_filter_settings() abort
-  imap <silent><buffer> <C-o> <Plug>(denite_filter_quit)
-endfunction
-
-" Browse open buffers
-"nnoremap ; :Denite buffer<CR> "bad mapping
-" Browse files in current directory
-nnoremap <leader>t :DeniteProjectDir file/rec<CR>
-"   <leader>g - Search current directory for occurences of given term and close window if no results
-nnoremap <leader>g :<C-u>Denite grep:. -no-empty<CR>
-"   <leader>j - Search current directory for occurences of word under cursor
-nnoremap <leader>j :<C-u>DeniteCursorWord grep:.<CR>
-nnoremap <C-p> :<C-u>Denite file/rec -start-filter<CR>
-nnoremap <leader>s :<C-u>Denite buffer<CR>
-nnoremap <leader>8 :<C-u>DeniteCursorWord grep:.<CR>
-nnoremap <leader>/ :<C-u>Denite -start-filter grep:::!<CR>
-nnoremap <leader><Space>/ :<C-u>DeniteBufferDir -start-filter grep:::!<CR>
-nnoremap <leader>d :<C-u>DeniteBufferDir file/rec -start-filter<CR>
-nnoremap <leader>r :<C-u>Denite -resume -cursor-pos=+1<CR>
-nnoremap <leader><C-r> :<C-u>Denite register:.<CR>
-nnoremap <leader>gs:<C-u>Denite gitstatus<CR>
-
-augroup Denite
-  autocmd!
-  autocmd VimEnter * call SetDeniteSettings()
-  autocmd FileType denite call s:denite_settings()
-  autocmd FileType denite-filter call s:denite_filter_settings()
-augroup END
+"function! g:SetDeniteSettings ()
+"  call denite#custom#option('_', {
+"        \ 'prompt': '>',
+"        \ 'split': 'floating',
+"        \ 'highlight_matched_char': 'Underlined',
+"        \ 'highlight_matched_range': 'NormalFloat',
+"        \ 'wincol': &columns / 6,
+"        \ 'winwidth': &columns * 2 / 3,
+"        \ 'winrow': &lines / 6,
+"        \ 'winheight': &lines * 2 / 3,
+"        \ 'max_dynamic_update_candidates': 100000
+"        \ })
+"
+"  call denite#custom#var('file/rec', 'command',
+"        \ ['rg', '--files', '--glob', '!.git', '--color', 'never'])
+"
+"  " Ripgrep command on grep source
+"  call denite#custom#var('grep', {
+"        \ 'command': ['rg'],
+"        \ 'default_opts': ['-i', '--vimgrep', '--no-heading'],
+"        \ 'recursive_opts': [],
+"        \ 'pattern_opt': ['--regexp'],
+"        \ 'separator': ['--'],
+"        \ 'final_opts': [],
+"        \ })
+"
+"endfunction
+"
+"function! s:denite_settings() abort
+"  nnoremap <silent><buffer><expr> <CR>
+"        \ denite#do_map('do_action')
+"  nnoremap <silent><buffer><expr> <C-v>
+"        \ denite#do_map('do_action', 'vsplit')
+"  nnoremap <silent><buffer><expr> d
+"        \ denite#do_map('do_action', 'delete')
+"  nnoremap <silent><buffer><expr> p
+"        \ denite#do_map('do_action', 'preview')
+"  nnoremap <silent><buffer><expr> <Esc>
+"        \ denite#do_map('quit')
+"  nnoremap <silent><buffer><expr> q
+"        \ denite#do_map('quit')
+"  nnoremap <silent><buffer><expr> i
+"        \ denite#do_map('open_filter_buffer')
+"  nnoremap <silent><buffer><expr> <Space>
+"        \ denite#do_map('toggle_select').'j'
+"endfunction
+"
+"
+"function! s:denite_filter_settings() abort
+"  imap <silent><buffer> <C-o> <Plug>(denite_filter_quit)
+"endfunction
+"
+"" Browse open buffers
+""nnoremap ; :Denite buffer<CR> "bad mapping
+"" Browse files in current directory
+"nnoremap <leader>t :DeniteProjectDir file/rec<CR>
+""   <leader>g - Search current directory for occurences of given term and close window if no results
+"nnoremap <leader>g :<C-u>Denite grep:. -no-empty<CR>
+""   <leader>j - Search current directory for occurences of word under cursor
+"nnoremap <leader>j :<C-u>DeniteCursorWord grep:.<CR>
+"nnoremap <C-p> :<C-u>Denite file/rec -start-filter<CR>
+"nnoremap <leader>s :<C-u>Denite buffer<CR>
+"nnoremap <leader>8 :<C-u>DeniteCursorWord grep:.<CR>
+"nnoremap <leader>/ :<C-u>Denite -start-filter grep:::!<CR>
+"nnoremap <leader><Space>/ :<C-u>DeniteBufferDir -start-filter grep:::!<CR>
+"nnoremap <leader>d :<C-u>DeniteBufferDir file/rec -start-filter<CR>
+"nnoremap <leader>r :<C-u>Denite -resume -cursor-pos=+1<CR>
+"nnoremap <leader><C-r> :<C-u>Denite register:.<CR>
+"nnoremap <leader>gs:<C-u>Denite gitstatus<CR>
+"
+"augroup Denite
+"  autocmd!
+"  autocmd VimEnter * call SetDeniteSettings()
+"  autocmd FileType denite call s:denite_settings()
+"  autocmd FileType denite-filter call s:denite_filter_settings()
+"augroup END
 
 "=== Coc.nvim settings
 "
