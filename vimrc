@@ -1,10 +1,10 @@
 "=== define some variables
-if has('win64')
+if has('win64')                     "| Windows
   " path to user vim dir
   let g:vimfiles = $HOME . '\vimfiles\'
   " location of minpac
   let g:minpacdir = g:vimfiles . 'pack\minpac\opt\minpac'
-else
+else                                "| Unix
   " path to user vim dir
   let g:vimfiles = $HOME . '/.vim/'
   " location of minpac
@@ -12,7 +12,7 @@ else
 endif
 
 "=== Auto install package manager
-if empty(glob(g:minpacdir))
+if empty(glob(g:minpacdir))         "| if dir is empty
   execute 'silent !git clone https://github.com/k-takata/minpac.git ' . g:minpacdir
   let g:minpacFirstRun = 1
 endif
@@ -23,26 +23,26 @@ packadd minpac
 call minpac#init()
 
 " minpac must have {'type': 'opt'} so that it can be loaded with `packadd`.
-call minpac#add('k-takata/minpac', {'type': 'opt'})
+call minpac#add('k-takata/minpac', {'type': 'opt'})       "| Package manager
 " Add other plugins here.
-call minpac#add('lifepillar/vim-solarized8')
-call minpac#add('itchyny/lightline.vim')
-call minpac#add('drmikehenry/vim-fontsize')
-call minpac#add('roxma/nvim-yarp')
-call minpac#add('roxma/vim-hug-neovim-rpc')
-call minpac#add('Shougo/denite.nvim')
-call minpac#add('tpope/vim-surround')
-call minpac#add('tpope/vim-unimpaired')
-call minpac#add('tpope/vim-fugitive', {'type': 'opt'})
+call minpac#add('lifepillar/vim-solarized8')              "| Colorscheme 
+call minpac#add('itchyny/lightline.vim')                  "| Status line
+call minpac#add('drmikehenry/vim-fontsize')               "| Zoom
+call minpac#add('roxma/nvim-yarp')                        "| Prereq for denite
+call minpac#add('roxma/vim-hug-neovim-rpc')               "| Prereq for denite
+call minpac#add('Shougo/denite.nvim')                     "| a lot of lists
+call minpac#add('tpope/vim-surround')                     "| make surround easier
+call minpac#add('tpope/vim-unimpaired')                   "| lot of nice mappings
+call minpac#add('tpope/vim-fugitive', {'type': 'opt'})    "| Git wrapper
 "call minpac#add('tpope/vim-sensible')
 "call minpac#add('nelstrom/vim-visual-star-search')
-call minpac#add('dhruvasagar/vim-table-mode')
+call minpac#add('dhruvasagar/vim-table-mode')             "| make tables easy
 "call minpac#add('vim-airline/vim-airline')
 "call minpac#add('vim-airline/vim-airline-themes')
 "call minpac#add('retorillo/airline-tablemode.vim')
-call minpac#add('neoclide/coc.nvim', {'branch': 'release'})
-call minpac#add('honza/vim-snippets')
-call minpac#add('sheerun/vim-polyglot')
+call minpac#add('neoclide/coc.nvim', {'branch': 'release'}) "| lsp and autocomplete + a lot more 
+call minpac#add('honza/vim-snippets')                       "| basic snippets
+call minpac#add('sheerun/vim-polyglot')                     "| language packs
 
 " Define user commands for updating/cleaning the plugins.
 " Each of them loads minpac, reloads .vimrc to register the
@@ -147,11 +147,9 @@ set autoindent
 set smartindent
 set showmatch
 set ignorecase
-set formatoptions+=j " Delete comment characters when joining lines
 set smartcase
 set history=1000
 set langmenu=none
-set pastetoggle=<F2>
 language messages en_US.utf8
 set wildmode=longest,list,full
 set path+=**
