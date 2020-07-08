@@ -262,22 +262,24 @@ let g:python3_host_prog='C:\Python38\python.exe'
 "=== Coc.nvim settings
 "
 " coc extensions
-let g:coc_global_extensions=['coc-powershell','coc-json','coc-lists','coc-python','coc-yaml','coc-xml','coc-sh','coc-markdownlint']
+let g:coc_global_extensions=['coc-lists','coc-powershell','coc-json','coc-lists','coc-python','coc-yaml','coc-xml','coc-sh','coc-markdownlint']
 
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-reference)
-nmap <silent> gre <Plug>(coc-rename)
-nmap <silent> ga <Plug>(coc-codeaction)
-nmap <silent> en <Plug>(coc-diagnostic-next-error)
-nmap <silent> ep <Plug>(coc-diagnostic-prev-error)
-nmap <silent> dn <Plug>(coc-diagnostic-next)
-nmap <silent> dp <Plug>(coc-diagnostic-prev)
-nmap <silent> di <Plug>(coc-diagnostic-info)
+nmap <silent><leader>cd <Plug>(coc-definition)
+nmap <silent><leader>ci <Plug>(coc-implementation)
+nmap <silent><leader>cr <Plug>(coc-reference)
+nmap <silent><leader>cre <Plug>(coc-rename)
+nmap <silent><leader>ca <Plug>(coc-codeaction)
+nmap <silent><leader>cdn <Plug>(coc-diagnostic-next)
+nmap <silent><leader>cdp <Plug>(coc-diagnostic-prev)
+nmap <silent><leader>ci <Plug>(coc-diagnostic-info)
 nmap <leader>= <Plug>(coc-format)
 vmap <leader>p <Plug>(coc-format-selected)
 nmap <leader>p <Plug>(coc-format-selected)
+nnoremap <leader>cl :CocList <C-d>
+nnoremap <leader>clb :CocList buffers<CR>
+nnoremap <leader>cls :CocList symbols<CR>
+nnoremap <leader>cld :CocList diagnostics<CR>
+nnoremap <leader>cla :CocList actions<CR>
 
 "Start or refresh completion at current cursor position
 inoremap <silent><expr> <c-space> coc#refresh()
