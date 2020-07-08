@@ -307,3 +307,7 @@ augroup Markdown
   autocmd!
   autocmd FileType markdown :setlocal ts=4 sw=4 sts=4
 augroup End
+" TODO
+" replace shellcmd mkdir to builtin
+" add comment to all relevant places
+" change 'all' mappings to use <leader>
