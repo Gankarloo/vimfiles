@@ -94,6 +94,10 @@ endfunction
 
 nmap <F1> :call LoadFugitive()<CR>
 
+"=== force load all plugins, to avoid problems with functions not available
+"until after vimrc has been processed.
+packloadall
+
 "=== Lightline settings
 set noshowmode
 set laststatus=2
