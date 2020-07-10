@@ -41,6 +41,7 @@ call minpac#add('dhruvasagar/vim-table-mode')             "| make tables easy
 "call minpac#add('vim-airline/vim-airline-themes')
 "call minpac#add('retorillo/airline-tablemode.vim')
 call minpac#add('neoclide/coc.nvim', {'branch': 'release'}) "| lsp and autocomplete + a lot more 
+call minpac#add('josa42/vim-lightline-coc')                 "| coc integration to lightline
 call minpac#add('honza/vim-snippets')                       "| basic snippets
 call minpac#add('sheerun/vim-polyglot')                     "| language packs
 
@@ -99,36 +100,40 @@ nmap <F1> :call LoadFugitive()<CR>
 packloadall
 
 "=== Lightline settings
+
 set noshowmode
 set laststatus=2
-let g:lightline = {
-      \ 'active': {
-      \     'left': [ [ 'mode', 'paste' ],
-      \	              [ 'cocstatus','currentfunction','readonly', 'filename', 'modified' ] ],
-      \     'right': [ [ 'lineinfo' ],
-      \		             [ 'percent' ],
-      \		             [ 'fileformat', 'fileencoding', 'filetype' ] ],
-      \ },
-      \ 'component': {
-      \     'cocstatus': 'coc#status',
-      \     'currentfunction': 'CocCurrentFunction'
-      \ },
-      \ }
+let g:lightline = {}
+let g:lightline.active = {}
+"    \ 'active': {
+"    \     'left': [ [ 'mode','paste' ],[ 'cocstatus','currentfunction','readonly', 'filename', 'modified' ] ],
+"    \     'right': [ [ 'lineinfo' ],[ 'percent' ],[ 'fileformat', 'fileencoding', 'filetype' ] ],
+"    \ },
+"    \ 'component_function': {
+"    \     'cocstatus': 'coc#status',
+"    \     'currentfunction': 'CocCurrentFunction'
+"    \ },
+"    \ }
+let g:lightline.active.left = [[ 'mode','paste' ],[ 'coc_errors','coc_warnings','coc_ok' ],[ 'coc-status','readonly', 'filename', 'modified' ]]
+
+"register components
+call lightline#coc#register()
 
 "=== Colorscheme
 if has("gui_running")
   set background=light
+  let g:lightline.colorscheme = 'solarized'
   colorscheme solarized8_flat
-  let g:lightline = { 'colorscheme': 'solarized', }
 elseif has('win64')
   set background=dark
+  let g:lightline.colorscheme = 'default'
   colorscheme ron
-  let g:lightline = { 'colorscheme': 'default', }
 else
   set background=dark
+  let g:lightline.colorscheme = 'solarized'
   colorscheme solarized8_flat
-  let g:lightline = { 'colorscheme': 'solarized', }
 endif
+
 
 "=== Font settings
 set guifont=DejaVu_Sans_Mono_Unifont:h11:cDEFAULT:qDEFAULT
@@ -315,6 +320,7 @@ augroup Markdown
   autocmd!
   autocmd FileType markdown :setlocal ts=4 sw=4 sts=4
 augroup End
+
 " TODO
 " replace shellcmd mkdir to builtin
 " add comment to all relevant places
