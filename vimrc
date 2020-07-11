@@ -91,6 +91,8 @@ set undofile
 function LoadFugitive()
   :packadd vim-fugitive
   :edit
+  :call LightlineFugitive()
+  :call lightline#update()
   echo "Fugitive loaded..."
 endfunction
 
@@ -115,11 +117,35 @@ let g:lightline.active = {}
 "    \     'currentfunction': 'CocCurrentFunction'
 "    \ },
 "    \ }
-let g:lightline.active.left = [[ 'mode','paste' ],[ 'coc_errors','coc_warnings','coc_ok' ],[ 'coc-status','readonly','filename','modified','currentfunction' ]]
+let g:lightline.active.left = [[ 'mode','paste' ],[ 'coc_errors','coc_warnings','coc_ok' ],[ 'coc-status','readonly','filename','modified','fugitive','currentfunction' ]]
 let g:lightline.component_function = {}
 let g:lightline.component_function.currentfunction = 'CocCurrentFunction'
+let g:lightline.component_function.gitbranch = 'FugitiveHead'
+let g:lightline.component_function.fugitive = 'LightlineFugitive'
 "register components
 call lightline#coc#register()
+
+"try fancy fugitive integration from https://github.com/itchyny/lightline.vim/issues/96
+function! LightlineFugitive() abort
+  if &filetype ==# 'help'
+    return ''
+  endif
+  if has_key(b:, 'lightline_fugitive') && reltimestr(reltime(b:lightline_fugitive_)) =~# '^\s*0\.[0-5]'
+    return b:lightline_fugitive
+  endif
+  try
+    if exists('*fugitive#head')
+      let head = fugitive#head()
+    else
+      return ''
+    endif
+    let b:lightline_fugitive = head
+    let b:lightline_fugitibe_ = reltime()
+    return b:lightline_fugitive
+  catch
+  endtry
+  return ''
+endfunction
 
 "=== Colorscheme
 if has("gui_running")
