@@ -91,6 +91,7 @@ set undofile
 function LoadFugitive()
   :packadd vim-fugitive
   :edit
+  echo "Fugitive loaded..."
 endfunction
 
 nmap <F1> :call LoadFugitive()<CR>
