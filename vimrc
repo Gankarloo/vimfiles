@@ -326,3 +326,5 @@ augroup End
 " TODO
 " replace shellcmd mkdir to builtin
 " add comment to all relevant places
+" Test fugitive on a smb share to se if it still slows everything down. if so
+"   report issue. ref https://github.com/tpope/vim-fugitive/issues/365
