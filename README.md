@@ -76,7 +76,7 @@
     ~~~
 
 9. Install Denite
-    
+
     ~~~(powershell)
     choco install python -y
     ~~~
