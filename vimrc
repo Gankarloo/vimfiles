@@ -28,9 +28,9 @@ call minpac#add('k-takata/minpac', {'type': 'opt'})       "| Package manager
 call minpac#add('lifepillar/vim-solarized8')              "| Colorscheme 
 call minpac#add('itchyny/lightline.vim')                  "| Status line
 call minpac#add('drmikehenry/vim-fontsize')               "| Zoom
-call minpac#add('roxma/nvim-yarp')                        "| Prereq for denite
-call minpac#add('roxma/vim-hug-neovim-rpc')               "| Prereq for denite
-call minpac#add('Shougo/denite.nvim')                     "| a lot of lists
+"call minpac#add('roxma/nvim-yarp')                        "| Prereq for denite
+"call minpac#add('roxma/vim-hug-neovim-rpc')               "| Prereq for denite
+"call minpac#add('Shougo/denite.nvim')                     "| a lot of lists
 call minpac#add('tpope/vim-surround')                     "| make surround easier
 call minpac#add('tpope/vim-unimpaired')                   "| lot of nice mappings
 call minpac#add('tpope/vim-fugitive')                     "| Git wrapper
