@@ -42,18 +42,12 @@ call minpac#add('k-takata/minpac', {'type': 'opt'})       "| Package manager
 call minpac#add('lifepillar/vim-solarized8')              "| Colorscheme 
 call minpac#add('itchyny/lightline.vim')                  "| Status line
 call minpac#add('drmikehenry/vim-fontsize')               "| Zoom
-"call minpac#add('roxma/nvim-yarp')                        "| Prereq for denite
-"call minpac#add('roxma/vim-hug-neovim-rpc')               "| Prereq for denite
-"call minpac#add('Shougo/denite.nvim')                     "| a lot of lists
 call minpac#add('tpope/vim-surround')                     "| make surround easier
 call minpac#add('tpope/vim-unimpaired')                   "| lot of nice mappings
 call minpac#add('tpope/vim-fugitive')                     "| Git wrapper
-"call minpac#add('tpope/vim-fugitive', {'type': 'opt'})    "| Git wrapper
+call minpac#add('tpope/vim-dispatch')                     "| Async dispatcher
 "call minpac#add('tpope/vim-sensible')
-"call minpac#add('nelstrom/vim-visual-star-search')
 call minpac#add('dhruvasagar/vim-table-mode')             "| make tables easy
-"call minpac#add('vim-airline/vim-airline')
-"call minpac#add('vim-airline/vim-airline-themes')
 "call minpac#add('retorillo/airline-tablemode.vim')
 call minpac#add('neoclide/coc.nvim', {'branch': 'release'}) "| lsp and autocomplete + a lot more 
 call minpac#add('josa42/vim-lightline-coc')                 "| coc integration to lightline
