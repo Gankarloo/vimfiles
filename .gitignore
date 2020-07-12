@@ -3,4 +3,5 @@
 !vimrc
 !README.md
 !coc-settings.json
-!Windows_misc
+!Windows_misc/
+!Windows_misc/*
