@@ -69,20 +69,23 @@ let viminfofile = g:vimfiles . 'viminfo'
 
 " Store all swapfiles in user vim directory/swapfiles
 if !isdirectory(g:vimfiles . 'swapfiles')
-  execute 'silent !mkdir ' . g:vimfiles . 'swapfiles'
+  "execute 'silent !mkdir ' . g:vimfiles . 'swapfiles'
+  execute mkdir(g:vimfiles . 'swapfiles', "p", 0700)
 endif
 let &directory = g:vimfiles . 'swapfiles//'
 
 "set backupdir
 if !isdirectory(g:vimfiles . 'backup')
-  execute 'silent !mkdir ' . g:vimfiles . 'backup'
+  "execute 'silent !mkdir ' . g:vimfiles . 'backup'
+  execute mkdir(g:vimfiles . 'backup', "p", 0700)
 endif
 let &backupdir = g:vimfiles . 'backup//'
 set backup
 
 "=== undodir
 if !isdirectory(g:vimfiles . 'undo')
-  execute 'silent !mkdir ' . g:vimfiles . 'undo'
+  "execute 'silent !mkdir ' . g:vimfiles . 'undo'
+  execute mkdir(g:vimfiles . 'undo', "p", 0700)
 endif
 let &undodir = g:vimfiles . 'undo//'
 set undofile
