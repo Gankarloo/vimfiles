@@ -55,6 +55,8 @@ command! PackStatus packadd minpac | source $MYVIMRC | call minpac#status()
 
 " if firstrun fire off PackUpdate
 if exists('g:minpacFirstRun')
+  " to avoid coc creating default data dir.
+  let g:coc_data_home = vimfiles . 'coc-data'
   echom('First run detected, running PackUpdate')
   call minpac#update()
   !echo 'Plugin installation done, exiting...'
