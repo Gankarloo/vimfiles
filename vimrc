@@ -33,7 +33,8 @@ call minpac#add('roxma/vim-hug-neovim-rpc')               "| Prereq for denite
 call minpac#add('Shougo/denite.nvim')                     "| a lot of lists
 call minpac#add('tpope/vim-surround')                     "| make surround easier
 call minpac#add('tpope/vim-unimpaired')                   "| lot of nice mappings
-call minpac#add('tpope/vim-fugitive', {'type': 'opt'})    "| Git wrapper
+call minpac#add('tpope/vim-fugitive')                     "| Git wrapper
+"call minpac#add('tpope/vim-fugitive', {'type': 'opt'})    "| Git wrapper
 "call minpac#add('tpope/vim-sensible')
 "call minpac#add('nelstrom/vim-visual-star-search')
 call minpac#add('dhruvasagar/vim-table-mode')             "| make tables easy
@@ -117,35 +118,35 @@ let g:lightline.active = {}
 "    \     'currentfunction': 'CocCurrentFunction'
 "    \ },
 "    \ }
-let g:lightline.active.left = [[ 'mode','paste' ],[ 'coc_errors','coc_warnings','coc_ok' ],[ 'coc-status','readonly','filename','modified','fugitive','currentfunction' ]]
+let g:lightline.active.left = [[ 'mode','paste' ],[ 'coc_errors','coc_warnings','coc_ok' ],[ 'coc-status','readonly','filename','modified','currentfunction' ]]
 let g:lightline.component_function = {}
 let g:lightline.component_function.currentfunction = 'CocCurrentFunction'
 let g:lightline.component_function.gitbranch = 'FugitiveHead'
-let g:lightline.component_function.fugitive = 'LightlineFugitive'
+"let g:lightline.component_function.fugitive = 'LightlineFugitive'
 "register components
 call lightline#coc#register()
 
 "try fancy fugitive integration from https://github.com/itchyny/lightline.vim/issues/96
-function! LightlineFugitive() abort
-  if &filetype ==# 'help'
-    return ''
-  endif
-  if has_key(b:, 'lightline_fugitive') && reltimestr(reltime(b:lightline_fugitive_)) =~# '^\s*0\.[0-5]'
-    return b:lightline_fugitive
-  endif
-  try
-    if exists('*fugitive#head')
-      let head = fugitive#head()
-    else
-      return ''
-    endif
-    let b:lightline_fugitive = head
-    let b:lightline_fugitibe_ = reltime()
-    return b:lightline_fugitive
-  catch
-  endtry
-  return ''
-endfunction
+"function! LightlineFugitive() abort
+"  if &filetype ==# 'help'
+"    return ''
+"  endif
+"  if has_key(b:, 'lightline_fugitive') && reltimestr(reltime(b:lightline_fugitive_)) =~# '^\s*0\.[0-5]'
+"    return b:lightline_fugitive
+"  endif
+"  try
+"    if exists('*fugitive#head')
+"      let head = fugitive#head()
+"    else
+"      return ''
+"    endif
+"    let b:lightline_fugitive = head
+"    let b:lightline_fugitibe_ = reltime()
+"    return b:lightline_fugitive
+"  catch
+"  endtry
+"  return ''
+"endfunction
 
 "=== Colorscheme
 if has("gui_running")
