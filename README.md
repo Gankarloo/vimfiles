@@ -1,4 +1,6 @@
-# Installing gvim on windows
+# Set up vim environment on windows
+
+## Detailed instructions
 
 1. Install Chocolatey
 
@@ -75,21 +77,7 @@
     set laststatus=2
     ~~~
 
-9. Install Denite
-
-    ~~~(powershell)
-    choco install python -y
-    ~~~
-
-    ~~~(vim)
-
-    call minpac#add('roxma/nvim-yarp')
-    call minpac#add('roxma/vim-hug-neovim-rpc')
-    call minpac#add('Shougo/denite.nvim')
-    :PackUpdate
-    ~~~
-
-10. Install Coc.nvim
+9. Install Coc.nvim
 
     ~~~(powershell)
     choco install nodejs -y
@@ -101,3 +89,22 @@
     call minpac#add('sheerun/vim-polyglot')
     :PackUpdate
     ~~~
+
+## Quick mode
+
+~~~
+# Install Chocolaty
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+# Install vim + prereqs
+choco install vim-tux -y
+choco install git -y
+choco install nodejs -y
+
+# Better font
+<https://math.berkeley.edu/~serganov/ilyaz.org/software/fonts/unifont-smooth-mono-10.0.06--1.171-merged-with-dejavu-2.36-no-Han-Hangul.7z>
+
+# Clone my vimconfig
+git clone https://github.com/Gankarloo/vimfiles.git $HOME\vimfiles
+
+# Start vim, wait for it to finish setting everything up. Close and start again. enjoy!
