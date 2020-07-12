@@ -303,7 +303,8 @@ let g:python3_host_prog='C:\Python38\python.exe'
 "=== Coc.nvim settings
 "
 " coc extensions
-let g:coc_global_extensions=['coc-lists','coc-powershell','coc-json','coc-lists','coc-python','coc-yaml','coc-xml','coc-sh','coc-markdownlint']
+let g:coc_data_home = vimfiles . 'coc-data'
+let g:coc_global_extensions=['coc-lists','coc-powershell','coc-json','coc-snippets','coc-python','coc-yaml','coc-xml','coc-sh','coc-markdownlint']
 
 nmap <silent><leader>cd <Plug>(coc-definition)
 nmap <silent><leader>ci <Plug>(coc-implementation)
