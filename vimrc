@@ -13,7 +13,17 @@ endif
 
 " coc extensions. data_home needs to be defined before coc is loaded.
 let g:coc_data_home = vimfiles . 'coc-data'
-let g:coc_global_extensions=['coc-lists','coc-powershell','coc-json','coc-snippets','coc-python','coc-yaml','coc-xml','coc-sh','coc-markdownlint']
+let g:coc_global_extensions=[
+  \ 'coc-lists',
+  \ 'coc-powershell',
+  \ 'coc-json',
+  \ 'coc-snippets',
+  \ 'coc-python',
+  \ 'coc-yaml',
+  \ 'coc-xml',
+  \ 'coc-sh',
+  \ 'coc-markdownlint'
+  \ ]
 
 "=== Auto install package manager
 if empty(glob(g:minpacdir))         "| if dir is empty
