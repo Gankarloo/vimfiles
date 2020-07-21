@@ -1,6 +1,6 @@
 {
   "sh.trace.server": "off",
-  "sh.commandPath": "C:/Users/ankarloog/AppData/Local/coc/extensions/node_modules/coc-sh/node_modules/.bin/bash-language-server.cmd",
+  "sh.commandPath": "c:/Users/ankarloog/vimfiles/coc-data/extensions/node_modules/coc-sh/node_modules/.bin/bash-language-server.cmd",
   "coc.preferences.currentFunctionSymbolAutoUpdate": true,
   "vimlsp.debug": false,
   "vimlsp.trace.server": "off"

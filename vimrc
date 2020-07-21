@@ -22,7 +22,8 @@ let g:coc_global_extensions=[
   \ 'coc-yaml',
   \ 'coc-xml',
   \ 'coc-sh',
-  \ 'coc-markdownlint'
+  \ 'coc-markdownlint',
+  \ 'coc-vimlsp'
   \ ]
 
 "=== Auto install package manager
@@ -46,6 +47,7 @@ call minpac#add('tpope/vim-surround')                     "| make surround easie
 call minpac#add('tpope/vim-unimpaired')                   "| lot of nice mappings
 call minpac#add('tpope/vim-fugitive')                     "| Git wrapper
 call minpac#add('tpope/vim-dispatch')                     "| Async dispatcher
+"call minpac#add('tpope/vim-apathy')                       "| intelligent path
 "call minpac#add('tpope/vim-sensible')
 call minpac#add('dhruvasagar/vim-table-mode')             "| make tables easy
 "call minpac#add('retorillo/airline-tablemode.vim')
@@ -162,18 +164,34 @@ call lightline#coc#register()
 "endfunction
 
 "=== Colorscheme
-if has("gui_running")
+if has("gui_running")       " Gvim settings
   set background=light
   let g:lightline.colorscheme = 'solarized'
   colorscheme solarized8_flat
-elseif has('win64')
-  set background=dark
-  let g:lightline.colorscheme = 'default'
-  colorscheme ron
-else
+  set cursorcolumn
+  set cursorline
+elseif has('win64')         " Windows settings
+  if empty($ConEmuDir)      " cmd or powershell consol settings
+    set background=dark
+    let g:lightline.colorscheme = 'default'
+    colorscheme ron
+    set nocursorcolumn
+    set nocursorline
+  else                      " ConEmu settings
+    set notermguicolors
+    set t_Co=16
+    set background=dark
+    let g:lightline.colorscheme = 'solarized'
+    colorscheme solarized8_flat
+    set nocursorcolumn
+    set nocursorline
+  endif
+else                        " Linux settings
   set background=dark
   let g:lightline.colorscheme = 'solarized'
   colorscheme solarized8_flat
+  set cursorcolumn
+  set cursorline
 endif
 
 
@@ -181,29 +199,31 @@ endif
 set guifont=DejaVu_Sans_Mono_Unifont:h11:cDEFAULT:qDEFAULT
 
 "=== Must have settings
-set nocompatible
-filetype on
-filetype plugin on
-filetype indent on
-syntax enable
-set hidden
-set number
-set hlsearch
-set cursorcolumn
-set cursorline
-set backspace=indent,eol,start
-set sidescroll=1
-set signcolumn=yes
-set autoindent
+set guioptions-=T                 " Disable toolbar
+set guioptions+=a                 " Autoselect visual to system clipboard
+set guioptions+=!                 " run external commands in vim terminal window
+set nocompatible                  " don't be compatible with old vi
+filetype plugin indent on         " enable filetype plugin indent detection
+syntax enable                     " enable syntax highlighting
+set hidden                        " allow hidden buffers
+set number                        " show line numbers
+set hlsearch                      " highlight searches
+set backspace=indent,eol,start    " more useful backspace
+set sidescroll=1                  " smoother sidescroll
+set signcolumn=yes                " enable signcolumn
+set autoindent                    " copy indent from previous line
 set smartindent
-set showmatch
-set ignorecase
-set smartcase
-set history=1000
-set langmenu=none
+set showmatch                     " Highlight matching braces and such
+set ignorecase                    " Ignore case in searches
+set smartcase                     " override ignorecase is pattern contains uppercase
+set history=1000                  " longer history
+set langmenu=none                 " defaults to english
+language en_US.utf8
 language messages en_US.utf8
-set wildmode=longest,list,full
-set path+=**
+source $VIMRUNTIME/delmenu.vim
+source $VIMRUNTIME/menu.vim
+set wildmode=longest:full,list:longest,full
+"set path+=**
 " keep buffer of lines above and below cursor
 set scrolloff=5
 " display incomplete commands
@@ -228,90 +248,13 @@ nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 " Calculate row. ex. 8*8 C-A yields 8*8=64
 ino <C-A> <C-O>yiW<End>=<C-R>=<C-R>0<CR>
 
-
-"=== Denite settings
-set encoding=utf-8
-let g:python3_host_prog='C:\Python38\python.exe'
-
-"function! g:SetDeniteSettings ()
-"  call denite#custom#option('_', {
-"        \ 'prompt': '>',
-"        \ 'split': 'floating',
-"        \ 'highlight_matched_char': 'Underlined',
-"        \ 'highlight_matched_range': 'NormalFloat',
-"        \ 'wincol': &columns / 6,
-"        \ 'winwidth': &columns * 2 / 3,
-"        \ 'winrow': &lines / 6,
-"        \ 'winheight': &lines * 2 / 3,
-"        \ 'max_dynamic_update_candidates': 100000
-"        \ })
-"
-"  call denite#custom#var('file/rec', 'command',
-"        \ ['rg', '--files', '--glob', '!.git', '--color', 'never'])
-"
-"  " Ripgrep command on grep source
-"  call denite#custom#var('grep', {
-"        \ 'command': ['rg'],
-"        \ 'default_opts': ['-i', '--vimgrep', '--no-heading'],
-"        \ 'recursive_opts': [],
-"        \ 'pattern_opt': ['--regexp'],
-"        \ 'separator': ['--'],
-"        \ 'final_opts': [],
-"        \ })
-"
-"endfunction
-"
-"function! s:denite_settings() abort
-"  nnoremap <silent><buffer><expr> <CR>
-"        \ denite#do_map('do_action')
-"  nnoremap <silent><buffer><expr> <C-v>
-"        \ denite#do_map('do_action', 'vsplit')
-"  nnoremap <silent><buffer><expr> d
-"        \ denite#do_map('do_action', 'delete')
-"  nnoremap <silent><buffer><expr> p
-"        \ denite#do_map('do_action', 'preview')
-"  nnoremap <silent><buffer><expr> <Esc>
-"        \ denite#do_map('quit')
-"  nnoremap <silent><buffer><expr> q
-"        \ denite#do_map('quit')
-"  nnoremap <silent><buffer><expr> i
-"        \ denite#do_map('open_filter_buffer')
-"  nnoremap <silent><buffer><expr> <Space>
-"        \ denite#do_map('toggle_select').'j'
-"endfunction
-"
-"
-"function! s:denite_filter_settings() abort
-"  imap <silent><buffer> <C-o> <Plug>(denite_filter_quit)
-"endfunction
-"
-"" Browse open buffers
-""nnoremap ; :Denite buffer<CR> "bad mapping
-"" Browse files in current directory
-"nnoremap <leader>t :DeniteProjectDir file/rec<CR>
-""   <leader>g - Search current directory for occurences of given term and close window if no results
-"nnoremap <leader>g :<C-u>Denite grep:. -no-empty<CR>
-""   <leader>j - Search current directory for occurences of word under cursor
-"nnoremap <leader>j :<C-u>DeniteCursorWord grep:.<CR>
-"nnoremap <C-p> :<C-u>Denite file/rec -start-filter<CR>
-"nnoremap <leader>s :<C-u>Denite buffer<CR>
-"nnoremap <leader>8 :<C-u>DeniteCursorWord grep:.<CR>
-"nnoremap <leader>/ :<C-u>Denite -start-filter grep:::!<CR>
-"nnoremap <leader><Space>/ :<C-u>DeniteBufferDir -start-filter grep:::!<CR>
-"nnoremap <leader>d :<C-u>DeniteBufferDir file/rec -start-filter<CR>
-"nnoremap <leader>r :<C-u>Denite -resume -cursor-pos=+1<CR>
-"nnoremap <leader><C-r> :<C-u>Denite register:.<CR>
-"nnoremap <leader>gs:<C-u>Denite gitstatus<CR>
-"
-"augroup Denite
-"  autocmd!
-"  autocmd VimEnter * call SetDeniteSettings()
-"  autocmd FileType denite call s:denite_settings()
-"  autocmd FileType denite-filter call s:denite_filter_settings()
-"augroup END
+"=== coc-vimlsp
+let g:markdown_fenced_languages = [
+  \ 'vim',
+  \ 'help'
+  \ ]
 
 "=== Coc.nvim settings
-"
 
 nmap <silent><leader>cd <Plug>(coc-definition)
 nmap <silent><leader>ci <Plug>(coc-implementation)
