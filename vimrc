@@ -114,6 +114,7 @@ endfunction
 
 nmap <F1> :call LoadFugitive()<CR>
 
+set encoding=utf-8
 "=== force load all plugins, to avoid problems with functions not available
 "until after vimrc has been processed.
 packloadall
