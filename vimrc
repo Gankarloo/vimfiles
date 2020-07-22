@@ -134,7 +134,7 @@ let g:lightline.active = {}
 "    \     'currentfunction': 'CocCurrentFunction'
 "    \ },
 "    \ }
-let g:lightline.active.left = [[ 'mode','paste' ],[ 'coc_errors','coc_warnings','coc_ok' ],[ 'coc-status','readonly','filename','modified','currentfunction' ]]
+let g:lightline.active.left = [[ 'mode','paste' ],[ 'coc_errors','coc_warnings','coc_ok' ],[ 'coc-status','readonly','filename','modified','gitbranch','currentfunction' ]]
 let g:lightline.component_function = {}
 let g:lightline.component_function.currentfunction = 'CocCurrentFunction'
 let g:lightline.component_function.gitbranch = 'FugitiveHead'
