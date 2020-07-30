@@ -1,4 +1,4 @@
-"=== define some variables
+"=== define some variables {{{1
 if has('win64')                     "| Windows
   " path to user vim dir
   let g:vimfiles = $HOME . '\vimfiles\'
@@ -11,7 +11,7 @@ else                                "| Unix
   let g:minpacdir = g:vimfiles . 'pack/minpac/opt/minpac'
 endif
 
-" coc extensions. data_home needs to be defined before coc is loaded.
+" coc extensions. data_home needs to be defined before coc is loaded. {{{1
 let g:coc_data_home = vimfiles . 'coc-data'
 let g:coc_global_extensions=[
   \ 'coc-lists',
@@ -27,13 +27,13 @@ let g:coc_global_extensions=[
   \ 'coc-syntax'
   \ ]
 
-"=== Auto install package manager
+"=== Auto install package manager {{{1
 if empty(glob(g:minpacdir))         "| if dir is empty
   execute 'silent !git clone https://github.com/k-takata/minpac.git ' . g:minpacdir
   let g:minpacFirstRun = 1
 endif
 
-"=== Load package manager
+"=== Load package manager {{{1
 packadd minpac
 
 call minpac#init()
@@ -67,7 +67,7 @@ command! PackUpdate packadd minpac | source $MYVIMRC | call minpac#update('', {'
 command! PackClean  packadd minpac | source $MYVIMRC | call minpac#clean()
 command! PackStatus packadd minpac | source $MYVIMRC | call minpac#status()
 
-" if firstrun fire off PackUpdate
+" if firstrun fire off PackUpdate {{{1
 if exists('g:minpacFirstRun')
   " to avoid coc creating default data dir.
   let g:coc_data_home = vimfiles . 'coc-data'
@@ -79,7 +79,7 @@ if exists('g:minpacFirstRun')
   finish
 endif
 
-"=== viminfo
+"=== viminfo {{{1
 " set location of viminfo
 let viminfofile = g:vimfiles . 'viminfo'
 
@@ -106,7 +106,7 @@ endif
 let &undodir = g:vimfiles . 'undo//'
 set undofile
 
-"=== Fugitive settings
+"=== Fugitive settings {{{1
 " load on demand
 function LoadFugitive()
   :packadd vim-fugitive
@@ -123,7 +123,7 @@ set encoding=utf-8
 "until after vimrc has been processed.
 packloadall
 
-"=== Lightline settings
+"=== Lightline settings {{{1
 
 set noshowmode
 set laststatus=2
@@ -168,7 +168,7 @@ call lightline#coc#register()
 "  return ''
 "endfunction
 
-"=== Colorscheme
+"=== Colorscheme {{{1
 if has("gui_running")       " Gvim settings
   set background=light
   let g:lightline.colorscheme = 'solarized'
@@ -200,10 +200,10 @@ else                        " Linux settings
 endif
 
 
-"=== Font settings
+"=== Font settings {{{1
 set guifont=DejaVu_Sans_Mono_Unifont:h11:cDEFAULT:qDEFAULT
 
-"=== Must have settings
+"=== Must have settings {{{1
 set guioptions-=T                 " Disable toolbar
 set guioptions+=a                 " Autoselect visual to system clipboard
 set guioptions+=!                 " run external commands in vim terminal window
@@ -240,7 +240,7 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab
 
-"=== Nice to have
+"=== Nice to have {{{1
 " Toggle 'set list'
 nmap <leader>l :set list!<CR>
 
@@ -253,13 +253,13 @@ nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 " Calculate row. ex. 8*8 C-A yields 8*8=64
 ino <C-A> <C-O>yiW<End>=<C-R>=<C-R>0<CR>
 
-"=== coc-vimlsp
+"=== coc-vimlsp {{{1
 let g:markdown_fenced_languages = [
   \ 'vim',
   \ 'help'
   \ ]
 
-"=== Coc.nvim settings
+"=== Coc.nvim settings {{{1
 
 nmap <silent><leader>cd <Plug>(coc-definition)
 nmap <silent><leader>ci <Plug>(coc-implementation)
@@ -310,13 +310,13 @@ augroup Coc
   autocmd CursorHold * silent call CocActionAsync('highlight')
 augroup End
 
-"=== Markdown settings
+"=== Markdown settings {{{1
 augroup Markdown
   autocmd!
   autocmd FileType markdown :setlocal ts=4 sw=4 sts=4
 augroup End
 
-"=== Show HighlightInfo
+"=== Show HighlightInfo {{{1
 nnoremap <F12> :call SynStack()<CR>
 function! SynStack ()
     for i1 in synstack(line("."), col("."))
@@ -327,10 +327,11 @@ function! SynStack ()
     endfor
 endfunction
 
-"=== Gundo
+"=== Gundo {{{1
 nnoremap <F3> :GundoToggle<CR>
 
 " TODO
 " add comment to all relevant places
 " Test fugitive on a smb share to se if it still slows everything down. if so
 "   report issue. ref https://github.com/tpope/vim-fugitive/issues/365
+" vim: fdm=marker
