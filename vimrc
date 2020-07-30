@@ -23,7 +23,8 @@ let g:coc_global_extensions=[
   \ 'coc-xml',
   \ 'coc-sh',
   \ 'coc-markdownlint',
-  \ 'coc-vimlsp'
+  \ 'coc-vimlsp',
+  \ 'coc-syntax'
   \ ]
 
 "=== Auto install package manager
@@ -55,6 +56,9 @@ call minpac#add('neoclide/coc.nvim', {'branch': 'release'}) "| lsp and autocompl
 call minpac#add('josa42/vim-lightline-coc')                 "| coc integration to lightline
 call minpac#add('honza/vim-snippets')                       "| basic snippets
 call minpac#add('sheerun/vim-polyglot')                     "| language packs
+call minpac#add('jeetsukumaran/vim-indentwise')         "| indent text objects
+call minpac#add('sjl/gundo.vim')                        "| Visualize the undo tree
+
 
 " Define user commands for updating/cleaning the plugins.
 " Each of them loads minpac, reloads .vimrc to register the
@@ -278,15 +282,22 @@ nnoremap <leader>cla :CocList actions<CR>
 inoremap <silent><expr> <c-space> coc#refresh()
 
 " Use K to show documentation in preview window
-nnoremap K :call Show_documentation()<CR>
-
-function! Show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
+"nnoremap K :call Show_documentation()<CR>
+"
+"function! Show_documentation()
+"  if (index(['vim','help'], &filetype) >= 0)
+"    execute 'h '.expand('<cword>')
+"  else
+"    call CocAction('doHover')
+"  endif
+"endfunction
+" Use coc for default help
+set keywordprg=:call\ CocActionAsync('doHover')
+" switch to vim standard in vim and help buffers
+"augroup VimHelp
+"  autocmd!
+"  autocmd Filetype vim,help setlocal keywordprg=:help
+"augroup END
 
 " for lightline integration
 function! CocCurrentFunction()
@@ -304,6 +315,20 @@ augroup Markdown
   autocmd!
   autocmd FileType markdown :setlocal ts=4 sw=4 sts=4
 augroup End
+
+"=== Show HighlightInfo
+nnoremap <F12> :call SynStack()<CR>
+function! SynStack ()
+    for i1 in synstack(line("."), col("."))
+        let i2 = synIDtrans(i1)
+        let n1 = synIDattr(i1, "name")
+        let n2 = synIDattr(i2, "name")
+        echo n1 "->" n2
+    endfor
+endfunction
+
+"=== Gundo
+nnoremap <F3> :GundoToggle<CR>
 
 " TODO
 " add comment to all relevant places
