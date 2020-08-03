@@ -48,16 +48,16 @@ call minpac#add('tpope/vim-surround')                     "| make surround easie
 call minpac#add('tpope/vim-unimpaired')                   "| lot of nice mappings
 call minpac#add('tpope/vim-fugitive')                     "| Git wrapper
 call minpac#add('tpope/vim-dispatch')                     "| Async dispatcher
-"call minpac#add('tpope/vim-apathy')                       "| intelligent path
+call minpac#add('tpope/vim-apathy')                       "| intelligent path
 "call minpac#add('tpope/vim-sensible')
 call minpac#add('dhruvasagar/vim-table-mode')             "| make tables easy
-"call minpac#add('retorillo/airline-tablemode.vim')
 call minpac#add('neoclide/coc.nvim', {'branch': 'release'}) "| lsp and autocomplete + a lot more 
 call minpac#add('josa42/vim-lightline-coc')                 "| coc integration to lightline
 call minpac#add('honza/vim-snippets')                       "| basic snippets
 call minpac#add('sheerun/vim-polyglot')                     "| language packs
 call minpac#add('jeetsukumaran/vim-indentwise')         "| indent text objects
 call minpac#add('sjl/gundo.vim')                        "| Visualize the undo tree
+call minpac#add('sodapopcan/vim-twiggy')                  "| Branch extension to Fugitive
 
 
 " Define user commands for updating/cleaning the plugins.
