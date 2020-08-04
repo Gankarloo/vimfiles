@@ -281,6 +281,11 @@ nnoremap <leader>cla :CocList actions<CR>
 "Start or refresh completion at current cursor position
 inoremap <silent><expr> <c-space> coc#refresh()
 
+"snippet mappings
+imap <C-l> <Plug>(coc-snippets-expand)
+vmap <C-j> <Plug>(coc-snippets-select)
+
+
 " Use K to show documentation in preview window
 "nnoremap K :call Show_documentation()<CR>
 "
