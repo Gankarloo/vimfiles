@@ -11,7 +11,8 @@ else                                "| Unix
   let g:minpacdir = g:vimfiles . 'pack/minpac/opt/minpac'
 endif
 
-" coc extensions. data_home needs to be defined before coc is loaded. {{{1
+"=== coc pre settings {{{1
+" coc extensions. data_home needs to be defined before coc is loaded.
 let g:coc_data_home = vimfiles . 'coc-data'
 let g:coc_global_extensions=[
   \ 'coc-lists',
@@ -49,7 +50,9 @@ call minpac#add('tpope/vim-unimpaired')                   "| lot of nice mapping
 call minpac#add('tpope/vim-fugitive')                     "| Git wrapper
 call minpac#add('tpope/vim-dispatch')                     "| Async dispatcher
 call minpac#add('tpope/vim-apathy')                       "| intelligent path
-"call minpac#add('tpope/vim-sensible')
+call minpac#add('tpope/vim-vinegar')                       "| Better Netrw browser
+call minpac#add('OmniSharp/omnisharp-vim', {'type': 'opt'})                "| C# 
+call minpac#add('nickspoons/vim-sharpenup', {'type': 'opt'})                "| C# 
 call minpac#add('dhruvasagar/vim-table-mode')             "| make tables easy
 call minpac#add('neoclide/coc.nvim', {'branch': 'release'}) "| lsp and autocomplete + a lot more 
 call minpac#add('josa42/vim-lightline-coc')                 "| coc integration to lightline
@@ -67,7 +70,8 @@ command! PackUpdate packadd minpac | source $MYVIMRC | call minpac#update('', {'
 command! PackClean  packadd minpac | source $MYVIMRC | call minpac#clean()
 command! PackStatus packadd minpac | source $MYVIMRC | call minpac#status()
 
-" if firstrun fire off PackUpdate {{{1
+"=== Firstrun {{{1
+" if firstrun fire off PackUpdate
 if exists('g:minpacFirstRun')
   " to avoid coc creating default data dir.
   let g:coc_data_home = vimfiles . 'coc-data'
@@ -127,21 +131,19 @@ packloadall
 
 set noshowmode
 set laststatus=2
+let g:sharpenup_statusline_opts = { 'Higlight': 0 }
 let g:lightline = {}
 let g:lightline.active = {}
-"    \ 'active': {
-"    \     'left': [ [ 'mode','paste' ],[ 'cocstatus','currentfunction','readonly', 'filename', 'modified' ] ],
-"    \     'right': [ [ 'lineinfo' ],[ 'percent' ],[ 'fileformat', 'fileencoding', 'filetype' ] ],
-"    \ },
-"    \ 'component_function': {
-"    \     'cocstatus': 'coc#status',
-"    \     'currentfunction': 'CocCurrentFunction'
-"    \ },
-"    \ }
-let g:lightline.active.left = [[ 'mode','paste' ],[ 'coc_errors','coc_warnings','coc_ok' ],[ 'coc-status','readonly','filename','modified','gitbranch','currentfunction' ]]
+let g:lightline.active.left = [[ 'mode', 'paste' ], [ 'coc_errors', 'coc_warnings', 'coc_ok' ], [ 'coc-status', 'readonly', 'filename', 'modified', 'gitbranch', 'currentfunction' ]]
+let g:lightline.active.right = [['lineinfo'], ['percent'], ['fileformat', 'fileencoding', 'filetype']]
+"let g:lightline.active.right = [['lineinfo'], ['percent'], ['fileformat', 'fileencoding', 'filetype', 'sharpenup']]
+let g:lightline.inactive = {}
+let g:lightline.inactive.right = [['lineinfo'], ['percent'], ['sharpenup']]
 let g:lightline.component_function = {}
 let g:lightline.component_function.currentfunction = 'CocCurrentFunction'
 let g:lightline.component_function.gitbranch = 'FugitiveHead'
+let g:lightline.component = {}
+"let g:lightline.component.sharpenup = sharpenup#statusline#Build()
 "let g:lightline.component_function.fugitive = 'LightlineFugitive'
 "register components
 call lightline#coc#register()
@@ -223,6 +225,7 @@ set ignorecase                    " Ignore case in searches
 set smartcase                     " override ignorecase is pattern contains uppercase
 set history=1000                  " longer history
 set langmenu=none                 " defaults to english
+set splitright                    " open new splits to the right
 language en_US.utf8
 language messages en_US.utf8
 source $VIMRUNTIME/delmenu.vim
@@ -239,6 +242,9 @@ set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set expandtab
+
+" grep use ripgrep
+set grepprg=rg\ --no-ignore\ --vimgrep
 
 "=== Nice to have {{{1
 " Toggle 'set list'
@@ -335,6 +341,42 @@ endfunction
 "=== Gundo {{{1
 nnoremap <F3> :GundoToggle<CR>
 
+"=== Omnisharp {{{1
+
+augroup Omnisharp
+  autocmd!
+  autocmd FileType cs nmap <silent> <buffer> <F5> :Make<CR>
+  autocmd FileType cs nmap <silent> <buffer> <F6> :call RunCSharp()<CR>
+augroup END
+
+function RunCSharp()
+  "let b:progname = expand('%:p:r') . ".exe"
+  "execute '!' . b:progname
+  let b:workspaceFolder = execute('call coc#rpc#request("runCommand", ["workspace.workspaceFolders"])')
+  let b:proj = globpath(trim(b:workspaceFolder), "**/*.csproj")
+  execute "!dotnet run -p " . b:proj
+endfunction
+
+"=== Netrw {{{1
+let g:netrw_liststyle = 3
+let g:netrw_banner = 0
+let g:netrw_browse_split = 4
+"let g:netrw_winsize = 20
+"let g:netrw_preview = 1
+" Use popup instead of previewwindow
+set previewpopup=height:20,width:66
+"augroup netrwkeys
+  "autocmd!
+  "autocmd FileType netrw :nmap <silent><expr> <ESC> 
+  "\ popup_findpreview() ? popup_close(popup_findpreview()) : 
+  "\ "\<ESC>"
+"augroup END
+
+nnoremap <F9> :call VexToggle(getcwd())<CR>
+nnoremap <F10> :call VexToggle()<CR>
+"=== todo {{{1
+"Use powershell
+"call TogglePS()
 " TODO
 " add comment to all relevant places
 " Test fugitive on a smb share to se if it still slows everything down. if so
