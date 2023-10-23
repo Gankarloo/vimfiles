@@ -1,3 +1,4 @@
+"let $NVIM_COC_LOG_LEVEL = 'debug'
 "=== define some variables {{{1
 if has('win64')                     "| Windows
   " path to user vim dir
@@ -10,6 +11,13 @@ else                                "| Unix
   " location of minpac
   let g:minpacdir = g:vimfiles . 'pack/minpac/opt/minpac'
 endif
+"=== EXPERIMENTAL set shell=pwsh {{{1
+set shell=pwsh.exe
+set shellcmdflag=-NonInteractive\ -ExecutionPolicy\ RemoteSigned\ -Command
+set shellquote=\"
+set shellxquote=
+set shellpipe=>%s\ 2>&1
+set shellredir=>%s\ 2>&1
 
 "=== coc pre settings {{{1
 " coc extensions. data_home needs to be defined before coc is loaded.
@@ -19,6 +27,7 @@ let g:coc_global_extensions=[
   \ 'coc-powershell',
   \ 'coc-json',
   \ 'coc-snippets',
+  \ 'coc-ultisnips',
   \ 'coc-python',
   \ 'coc-yaml',
   \ 'coc-xml',
@@ -52,15 +61,20 @@ call minpac#add('tpope/vim-dispatch')                     "| Async dispatcher
 call minpac#add('tpope/vim-apathy')                       "| intelligent path
 call minpac#add('tpope/vim-vinegar')                       "| Better Netrw browser
 call minpac#add('OmniSharp/omnisharp-vim', {'type': 'opt'})                "| C# 
-call minpac#add('nickspoons/vim-sharpenup', {'type': 'opt'})                "| C# 
 call minpac#add('dhruvasagar/vim-table-mode')             "| make tables easy
 call minpac#add('neoclide/coc.nvim', {'branch': 'release'}) "| lsp and autocomplete + a lot more 
+call minpac#add('gankarloo/coc-omnisharp')                  "| fork of coc-omnisharp
 call minpac#add('josa42/vim-lightline-coc')                 "| coc integration to lightline
 call minpac#add('honza/vim-snippets')                       "| basic snippets
 call minpac#add('sheerun/vim-polyglot')                     "| language packs
 call minpac#add('jeetsukumaran/vim-indentwise')         "| indent text objects
 call minpac#add('sjl/gundo.vim')                        "| Visualize the undo tree
 call minpac#add('sodapopcan/vim-twiggy')                  "| Branch extension to Fugitive
+call minpac#add('puremourning/vimspector')                  "| Debug Adapter Protocoll plugin
+call minpac#add('SirVer/ultisnips')                  "| For when I need all of ultisnips functionality
+call minpac#add('aklt/plantuml-syntax')                  "| PlantUML syntax
+call minpac#add('vim-pandoc/vim-pandoc')                  "| Pandoc integration
+call minpac#add('Raku/vim-raku')
 
 
 " Define user commands for updating/cleaning the plugins.
@@ -120,11 +134,18 @@ function LoadFugitive()
   echo "Fugitive loaded..."
 endfunction
 
-nmap <F1> :call LoadFugitive()<CR>
-
 set encoding=utf-8
 "=== force load all plugins, to avoid problems with functions not available
 "until after vimrc has been processed.
+"=== Vimspector {{{1
+let g:vimspector_enable_mappings = 'HUMAN'
+
+"=== vim-pandoc {{{1
+let g:pandoc#filetypes#pandoc_markdown = 0
+let g:pandoc#filetypes#handled = ["pandoc", "rst", "textile", "markdown"]
+"let g:pandoc#modules#enabled = ["formatting", "bibliographies", "completion", "metadata", "menu", "executors", "toc", "spell", "hypertext"]
+let g:pandoc#modules#disabled = ["folding"]
+"=== Force load all plugins {{{1
 packloadall
 
 "=== Lightline settings {{{1
@@ -215,6 +236,7 @@ syntax enable                     " enable syntax highlighting
 set hidden                        " allow hidden buffers
 set number                        " show line numbers
 set hlsearch                      " highlight searches
+set incsearch                     " highlight search while typing
 set backspace=indent,eol,start    " more useful backspace
 set sidescroll=1                  " smoother sidescroll
 set signcolumn=yes                " enable signcolumn
@@ -231,7 +253,7 @@ language messages en_US.utf8
 source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
 set wildmode=longest:full,list:longest,full
-"set path+=**
+set path+=**
 " keep buffer of lines above and below cursor
 set scrolloff=5
 " display incomplete commands
@@ -328,7 +350,7 @@ augroup Markdown
 augroup End
 
 "=== Show HighlightInfo {{{1
-nnoremap <F12> :call SynStack()<CR>
+nnoremap <leader>ss :call SynStack()<CR>
 function! SynStack ()
     for i1 in synstack(line("."), col("."))
         let i2 = synIDtrans(i1)
@@ -339,14 +361,14 @@ function! SynStack ()
 endfunction
 
 "=== Gundo {{{1
-nnoremap <F3> :GundoToggle<CR>
+nnoremap gu :GundoToggle<CR>
 
 "=== Omnisharp {{{1
 
 augroup Omnisharp
   autocmd!
-  autocmd FileType cs nmap <silent> <buffer> <F5> :Make<CR>
-  autocmd FileType cs nmap <silent> <buffer> <F6> :call RunCSharp()<CR>
+  autocmd FileType cs nmap <silent> <buffer> <C-7> :Make<CR>
+  autocmd FileType cs nmap <silent> <buffer> <C-8> :call RunCSharp()<CR>
 augroup END
 
 function RunCSharp()
@@ -372,8 +394,11 @@ set previewpopup=height:20,width:66
   "\ "\<ESC>"
 "augroup END
 
-nnoremap <F9> :call VexToggle(getcwd())<CR>
-nnoremap <F10> :call VexToggle()<CR>
+nnoremap <C-9> :call VexToggle(getcwd())<CR>
+nnoremap <C-0> :call VexToggle("")<CR>
+
+"=== PlantUML settings {{{1
+"let g:plantuml_set_makeprg = 0
 "=== todo {{{1
 "Use powershell
 "call TogglePS()
@@ -382,3 +407,11 @@ nnoremap <F10> :call VexToggle()<CR>
 " Test fugitive on a smb share to se if it still slows everything down. if so
 "   report issue. ref https://github.com/tpope/vim-fugitive/issues/365
 " vim: fdm=marker
+" === strikethrough {{{1
+" map _ to strikethrough the whole line
+nnoremap _ :s/./&̶/g <CR>:noh<CR>
+" === spell {{{1
+" map <C-s> to fix previous spelling errors
+inoremap <C-s> <c-g>u<Esc>[s1z=`]a<c-g>u
+" enable spell locally
+nnoremap <leader>spell :setlocal spell<CR>

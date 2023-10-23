@@ -5,12 +5,13 @@
   "vimlsp.debug": false,
   "vimlsp.trace.server": "off",
   "coc.source.syntax.priority": 99,
-  "languageserver": {
-    "omnisharp": {
-      "command": "C:/Users/ankarloog/AppData/Local/omnisharp-vim/omnisharp-roslyn/OmniSharp.exe",
-      "args": ["-lsp"],
-      "filetypes": ["cs"],
-      "trace.server": "verbose"
-    }
-  }
+  "cs.trace.server": "verbose",
+  "json.schemas": [{
+    "fileMatch": [ ".vimspector.json" ],
+    "url": "https://puremourning.github.io/vimspector/schema/vimspector.schema.json"
+  },
+  {
+    "fileMatch": [ ".gadgets.json", ".gadgets.d/*.json" ],
+    "url": "https://puremourning.github.io/vimspector/schema/gadgets.schema.json"
+  }]
 }
